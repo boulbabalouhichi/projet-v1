@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { logout, userCurrent } from "./JS/userSlice/userSlice";
 import Profil from "./components/Profil";
 import PrivateRoute from "./routes/PrivateRoute";
+import Home1 from "./components/Pages/Home1";
+import { getcontact } from "./JS/ContactSlice";
 function App() {
   const isAuth = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -16,26 +18,15 @@ function App() {
     if (isAuth) {
       dispatch(userCurrent());
     }
+    dispatch(getcontact())
   }, []);
   return (
     <div className="App">
-      <div className="header">
-        <h1>Auth workshop</h1>
-        {isAuth ? (
-          <button
-            onClick={() => {
-              dispatch(logout());
-              navigate("/");
-            }}
-          >
-            Logout
-          </button>
-        ) : null}
-      </div>
 
       <Routes>
         <Route exact path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path='/home' element={<Home1/>}/>
         <Route element={<PrivateRoute />}>
           <Route path="/profil" element={<Profil />} />
         </Route>{" "}
